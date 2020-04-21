@@ -57,7 +57,7 @@ def getsticker(bot: Bot, update: Update):
                im.save("sticker.png", "png") 
                bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
             except IOError: 
-                   update.effective_message.reply_text("Dammit, got some errors while processing the sticker, you may report it to my master - (@allukatm) if the error persists.")
+                   update.effective_message.reply_text("Dammit, got some errors while processing the sticker, you may report it to my master - (@imperialxx) if the error persists.")
 
             os.remove("sticker.png")
        elif msg.reply_to_message.document:
@@ -71,7 +71,7 @@ def getsticker(bot: Bot, update: Update):
                im.save("sticker.png", "png") 
                bot.sendDocument(chat_id, document=open('sticker.png', 'rb'))
             except IOError: 
-                   update.effective_message.reply_text("Dammit, got some errors while processing the sticker, you may report it to my master - (@spookyenvy) if the error persists.")
+                   update.effective_message.reply_text("Dammit, got some errors while processing the sticker, you may report it to my master - (@imperialxx) if the error persists.")
             os.remove("sticker.png")
        else:
            update.effective_message.reply_text("Unknown format. sticker/photo/document are the supported formats.")
@@ -163,7 +163,7 @@ def makepack_internal(msg, user, png_sticker, emoji, bot):
     name = name[:50]
     packname = f"c{user.id}_by_{bot.username}"
     try:
-        success = bot.create_new_sticker_set(user.id, packname, name + "'s alluka pack",
+        success = bot.create_new_sticker_set(user.id, packname, name + "by @imperialxx",
                                              png_sticker=png_sticker,
                                              emojis=emoji)
     except TelegramError as e:
