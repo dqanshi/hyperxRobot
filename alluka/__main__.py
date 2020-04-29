@@ -30,13 +30,13 @@ I'm a modular group management bot with a few fun extras! Have a look at the fol
 the things I can help you with.
 
 *Main* commands available:
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
- - /settings:
-  - in PM: will send you your settings for all supported modules.
-  - in a group: will redirect you to pm, with all that chat's settings.
+ ➖♻️ /start: start the bot
+ ➖♻️ /help: PM's you this message.
+ ➖♻️ /help <module name>: PM's you info about that module.
+ ➖♻️ /donate: information about how to donate!
+ ➖♻️ /settings:
+  ➖ in PM: will send you your settings for all supported modules.
+  ➖ in a group: will redirect you to pm, with all that chat's settings.
 
 {}
 And the following:
@@ -146,7 +146,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("🆈🅾 🆆🅷🅰🆃🆂🆄🅿 🅷🅾🆆 🅰🆁🅴 🆈🅾🆄")
+        update.effective_message.reply_text("മച്ചാനെ സുഖമല്ലേ...🙂")
 
 def send_start(bot, update):
     #Try to remove old message
@@ -157,12 +157,12 @@ def send_start(bot, update):
         pass
 
     chat = update.effective_chat  # type: Optional[Chat]
-    text = "💠Iam an group management bot.. "
-    text += "\n💠 I will help you too....if you want"
+    text = "💠ഞാൻ ഒരു ഗ്രൂപ് മാനേജ്മെന്റ് ബോട്ട് ആണ് "
+    text += "\n💠 എന്നെ ഗ്രൂപ്പിൽ ആഡ് ചെയ്യൂ ഒട്ടും മടിക്കേണ്ട എന്ത് സഹായങ്ങൾക്കും ഞാൻ ഉണ്ട്...."
     text += "\n\n💠Press the help button below"  
 
-    keyboard = [[InlineKeyboardButton(text="🔰Help", callback_data="help_back"),InlineKeyboardButton(text="Channel",url="https://telegram.dog/mallutechtrick")]]
-    keyboard += [[InlineKeyboardButton(text="🌟Add Me🌟",url="http://t.me/Iam_angel_bot?startgroup=true"),InlineKeyboardButton(text="💠 OWNER 💠",url="tg://user?id=551290198")]]
+    keyboard = [[InlineKeyboardButton(text="🔰Help", callback_data="help_back"),InlineKeyboardButton(text="🔸Channel🔹",url="https://telegram.dog/mallutechtrick")]]
+    keyboard += [[InlineKeyboardButton(text="🌟Add Me🌟",url="http://t.me/{}?startgroup=true".format(bot.username)),InlineKeyboardButton(text="💠 OWNER 💠",url="HTTPS://t.me/imperialxx")]]
 
     update.effective_message.reply_photo(img,text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
 
@@ -214,7 +214,7 @@ def help_button(bot: Bot, update: Update):
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(
-                                         [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
+                                         [[InlineKeyboardButton(text="☢️BACK☢️", callback_data="help_back")]]))
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
@@ -259,8 +259,8 @@ def get_help(bot: Bot, update: Update):
 
         update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="🔰Help",url="t.me/{}?start=help".format(bot.username)),
-                                                InlineKeyboardButton(text="🔰Support chat.",url="https://telegram.dog/tg://not_yet")]]))
+                                                [[InlineKeyboardButton(text="⚔️Help⚔️",url="t.me/{}?start=help".format(bot.username)),
+                                                InlineKeyboardButton(text="🎸Channel🎸",url="https://telegram.dog/backgroundmusiq")]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
