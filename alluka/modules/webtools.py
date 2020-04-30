@@ -119,8 +119,8 @@ def ping(bot: Bot, update: Update):
 
 
 IP_HANDLER = CommandHandler("ip", get_bot_ip, filters=Filters.chat(OWNER_ID))
-#RTT_HANDLER = CommandHandler("ping", rtt, filters=CustomFilters.sudo_filter)
-PING_HANDLER = CommandHandler("cping", ping, filters=CustomFilters.sudo_filter)
+#RTT_HANDLER = CommandHandler("cping", rtt, filters=CustomFilters.sudo_filter)
+PING_HANDLER = CommandHandler("ping", ping, filters=CustomFilters.sudo_filter)
 
 
 dispatcher.add_handler(IP_HANDLER)
