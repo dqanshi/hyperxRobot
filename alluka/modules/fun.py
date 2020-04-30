@@ -79,19 +79,22 @@ def roll(bot: Bot, update: Update):
 def toss(bot: Bot, update: Update):
     update.message.reply_text(random.choice(fun_strings.TOSS))
 
-@run_async
-def kill(bot: Bot, update: Update):
-    update.message.reply_text(random.choice(fun_strings.KILL_STRINGS))
 
 @run_async
-def sing(bot: Bot, update: Update):
-    update.message.reply_text(random.choice(fun_strings.SING_STRINGS))
+def kill(bot: Bot, update: Update):
+    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
+    reply_text(random.choice(fun_strings.KILL_STRINGS))
 
 
 @run_async
 def abuse(bot: Bot, update: Update):
     reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
     reply_text(random.choice(fun_strings.ABUSE_STRINGS))
+
+@run_async
+def sing(bot: Bot, update: Update):
+    reply_text = update.effective_message.reply_to_message.reply_text if update.effective_message.reply_to_message else update.effective_message.reply_text
+    reply_text(random.choice(fun_strings.SING_STRINGS))
 
 
 @run_async
