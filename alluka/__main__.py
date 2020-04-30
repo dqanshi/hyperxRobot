@@ -61,7 +61,7 @@ USER_SETTINGS = {}
 
 GDPR = []
 
-img = "https://telegra.ph/Bots-04-19"
+img = "https://telegra.ph/file/cf45a9fc7007f599329bf.jpg"
 
 for module_name in ALL_MODULES:
     imported_module = importlib.import_module("alluka.modules." + module_name)
