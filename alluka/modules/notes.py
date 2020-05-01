@@ -15,6 +15,9 @@ from alluka.modules.disable import DisableAbleCommandHandler
 from alluka.modules.helper_funcs.chat_status import user_admin
 from alluka.modules.helper_funcs.misc import build_keyboard, revert_buttons
 from alluka.modules.helper_funcs.msg_types import get_note_type
+from alluka.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
+from alluka.modules.connection import connected
+from alluka.modules.helper_funcs.alternate import send_message
 
 FILE_MATCHER = re.compile(r"^###file_id(!photo)?###:(.*?)(?:\s|$)")
 
@@ -196,6 +199,71 @@ def list_notes(bot: Bot, update: Update):
     elif len(msg) != 0:
         update.effective_message.reply_text(msg.format(chat_name) + des, parse_mode=ParseMode.MARKDOWN)
 
+@run_async
+@user_admin
+def private_note(bot: Bot, update: Update, args: List[str]):
+
+	chat = update.effective_chat  # type: Optional[Chat]
+	user = update.effective_user  # type: Optional[User]
+	conn = connected(bot, update, chat, user.id)
+	if conn:
+		chat_id = conn
+		chat_name = dispatcher.bot.getChat(conn).title
+	else:
+		chat_id = update.effective_chat.id
+		if chat.type == "private":
+			chat_name = chat.title
+		else:
+			chat_name = chat.title
+
+	if len(args) >= 1:
+		if args[0] in ("yes", "on"):
+			if len(args) >= 2:
+				if args[1] == "del":
+					sql.private_note(str(chat_id), True, True)
+					send_message(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM and the hashtag message will be deleted.", parse_mode="markdown")
+				else:
+					sql.private_note(str(chat_id), True, False)
+					send_message(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM.", parse_mode="markdown")
+			else:
+				sql.private_note(str(chat_id), True, False)
+				send_message(update.effective_message, "Private Note was *enabled*, when users get notes, the message will be sent to the PM.", parse_mode="markdown")
+		elif args[0] in ("no", "off"):
+			sql.private_note(str(chat_id), False, False)
+			send_message(update.effective_message, "Private Note was *disabled*, notes will be sent to group.", parse_mode="markdown")
+		else:
+			send_message(update.effective_message, "Unknown argument - please use 'yes', or 'no'.")
+	else:
+		is_private, is_delete = sql.get_private_note(chat_id)
+		print(is_private, is_delete)
+		send_message(update.effective_message, "Current Private Note settings at {}: *{}*{}".format(chat_name, "Enabled" if is_private else "Disabled", " - *Hash will be deleted*" if is_delete else ""), parse_mode="markdown")
+
+@run_async
+@user_admin
+def remove_all_notes(bot: Bot, update: Update):
+    chat = update.effective_chat
+    user = update.effective_user
+    message = update.effective_message
+    msg_id = update.effective_message.message_id
+
+    if chat.type == "private":
+        pass
+    else:
+        owner = chat.get_member(user.id)
+        if owner.status != 'creator':
+            message.reply_text(chat.id, "You must be this chat creator.")
+            return
+
+    note_list = sql.get_all_chat_notes(chat.id)
+    x = 0
+    for notename in note_list:
+        x += 1
+        note = notename.name.lower()
+        sql.rm_note(chat.id, note)
+
+    bot.send_message(chat.id, text ="notes from this chat have been removed.",reply_to_message_id=msg_id)
+
+
 
 def __import_data__(chat_id, data):
     failures = []
@@ -245,21 +313,27 @@ be useful when updating a current note.
 A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
 `buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
  - /save <notename>: save the replied message as a note with name notename
+ - /clearall: Clean all notes in your group, only use this if you know what you're doing
  - /clear <notename>: clear note with this name
+ - /privatenote <on/yes/off/no> <? del>: whether or not to send the note in PM. Write `del` besides on/off to delete hashtag message on group.
 """
 
 __mod_name__ = "Notes"
 
 GET_HANDLER = CommandHandler("get", cmd_get, pass_args=True)
 HASH_GET_HANDLER = RegexHandler(r"^#[^\s]+", hash_get)
-
+REMOVE_ALL_NOTES_HANDLER = CommandHandler("clearall", remove_all_notes)
 SAVE_HANDLER = CommandHandler("save", save)
 DELETE_HANDLER = CommandHandler("clear", clear, pass_args=True)
 
 LIST_HANDLER = DisableAbleCommandHandler(["notes", "saved"], list_notes, admin_ok=True)
+
+PMNOTE_HANDLER = CommandHandler("privatenote", private_note, pass_args=True)
 
 dispatcher.add_handler(GET_HANDLER)
 dispatcher.add_handler(SAVE_HANDLER)
 dispatcher.add_handler(LIST_HANDLER)
 dispatcher.add_handler(DELETE_HANDLER)
 dispatcher.add_handler(HASH_GET_HANDLER)
+dispatcher.add_handler(PMNOTE_HANDLER)
+dispatcher.add_handler(REMOVE_ALL_NOTES_HANDLER)
