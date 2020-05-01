@@ -5,8 +5,8 @@ import requests
 from telegram import Bot, Update, ParseMode
 from telegram.ext import run_async
 
-from tg_bot import dispatcher, StartTime
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from alluka import dispatcher, StartTime
+from alluka.modules.disable import DisableAbleCommandHandler
 
 sites_list = {
     "Telegram": "https://api.telegram.org",
