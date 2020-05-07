@@ -32,4 +32,7 @@ def zal(bot: Bot, update: Update, args):
     zalgofied_text = zalgo.zalgo().zalgofy(input_text)
     update.message.reply_text(zalgofied_text)
 
+__help__ = """ -/zal : Type the text after command"""
+__mod_name__ = "zalgo"
+
 dispatcher.add_handler(CommandHandler('zal', zal, pass_args=True))
