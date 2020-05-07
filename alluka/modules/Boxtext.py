@@ -35,4 +35,4 @@ dispatcher.add_handler(BOX_HANDLER)
 
 __mod_name__ = "Box Text"
 __command_list__ = ["box"]
-__handlers__ = [WEEBIFY_HANDLER]
+__handlers__ = [BOX_HANDLER]
