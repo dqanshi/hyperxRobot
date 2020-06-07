@@ -146,7 +146,7 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             send_start(bot, update)
     else:
-        update.effective_message.reply_text("മച്ചാനെ സുഖമല്ലേ...🙂")
+        update.effective_message.reply_text("ഒന്നു നിർത്തി പോടെയ് 🚶🚶...🙂")
 
 def send_start(bot, update):
     #Try to remove old message
@@ -162,7 +162,7 @@ def send_start(bot, update):
     text += "\n\n💠Press the help button below"  
 
     keyboard = [[InlineKeyboardButton(text="🔰Help", callback_data="help_back"),InlineKeyboardButton(text="🔸Channel🔹",url="https://telegram.dog/mallutechtrick")]]
-    keyboard += [[InlineKeyboardButton(text="🌟Add Me🌟",url="http://t.me/{}?startgroup=true".format(bot.username)),InlineKeyboardButton(text="💠 OWNER 💠",url="HTTPS://t.me/imperialxx")]]
+    keyboard += [[InlineKeyboardButton(text="🌟Add Me🌟",url="http://t.me/{}?startgroup=true".format(bot.username)),InlineKeyboardButton(text="💠 OWNER 💠",url="HTTPS://t.me/am_dq_fan")]]
 
     update.effective_message.reply_photo(img,text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN)
 
