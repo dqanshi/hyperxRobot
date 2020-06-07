@@ -1,4 +1,4 @@
-# Deploy Hyper X /◆/ @imperialxx 
+# Deploy Hyper X /◆/  
 > with HunterxHunter theme.
 
 
