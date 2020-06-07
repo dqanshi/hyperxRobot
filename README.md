@@ -1,4 +1,4 @@
-# Deploy Nazriya Robot /◆/ @imperialxx 
+# Deploy Hyper X /◆/ @imperialxx 
 > with HunterxHunter theme.
 
 
