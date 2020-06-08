@@ -1,8 +1,8 @@
 import random
 from telegram.ext import run_async, Filters
 from telegram import Message, Chat, Update, Bot, MessageEntity
-from tg_bot import dispatcher
-from tg_bot.modules.disable import DisableAbleCommandHandler
+from alluka import dispatcher
+from alluka.modules.disable import DisableAbleCommandHandler
 
 SFW_STRINGS = (
     "🎶 മിഴിയറിയാതെ വന്നു നീ മിഴിയൂഞ്ഞാലിൽ... കനവറിയാതെയേതോ കിനാവു പോലെ... 🎶.",
